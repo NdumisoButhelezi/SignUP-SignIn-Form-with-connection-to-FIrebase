@@ -1,12 +1,16 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import {getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import{getFirestore, getDoc, doc} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore, getDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+
 
 const firebaseConfig = {
-    //YOUR COPIED FIREBASE PART SHOULD BE HERE
- //WATCH THIS VIDEO TO LEARN WHAT TO PUT HERE   https://youtu.be/_Xczf06n6x0
-  };
- 
+       apiKey: "AIzaSyDSL3Tc-UgcLf_S00d1SDpmt6CVZz0ZrdQ",
+       authDomain: "newpdf-fec68.firebaseapp.com",
+       projectId: "newpdf-fec68",
+       storageBucket: "newpdf-fec68.appspot.com",
+       messagingSenderId: "208738522694",
+       appId: "1:208738522694:web:ae01da4eb6041781085c47"
+};
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
