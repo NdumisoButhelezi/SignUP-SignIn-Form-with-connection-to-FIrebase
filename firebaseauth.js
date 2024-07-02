@@ -2,6 +2,7 @@
  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
  import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
  import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+ 
  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"
  
  // Your web app's Firebase configuration
@@ -15,6 +16,7 @@
     appId: "1:255983493498:web:7f94fc55a83607268f76c3",
     measurementId: "G-040K87PQ9T"
   };
+
 
  // Initialize Firebase
  const app = initializeApp(firebaseConfig);
