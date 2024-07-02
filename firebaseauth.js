@@ -18,6 +18,7 @@
 
  // Initialize Firebase
  const app = initializeApp(firebaseConfig);
+ const analytics = getAnalytics(app);
 
  function showMessage(message, divId){
     var messageDiv=document.getElementById(divId);
