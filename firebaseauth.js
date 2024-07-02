@@ -1,12 +1,20 @@
  // Import the functions you need from the SDKs you need
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
- import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
- import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+ import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+ import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
  
- const firebaseConfig = {
- //YOUR COPIED FIREBASE PART SHOULD BE HERE
- //WATCH THIS VIDEO TO LEARN WHAT TO PUT HERE   https://youtu.be/_Xczf06n6x0
- };
+ // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEwPq1-u1qL4vW499YjkqkGKjH67d0-T0",
+    authDomain: "newproto-49e08.firebaseapp.com",
+    databaseURL: "https://newproto-49e08-default-rtdb.firebaseio.com",
+    projectId: "newproto-49e08",
+    storageBucket: "newproto-49e08.appspot.com",
+    messagingSenderId: "255983493498",
+    appId: "1:255983493498:web:dfeb79d79ca72b1e8f76c3",
+    measurementId: "G-BT6PYW8ZV6"
+  };
 
  // Initialize Firebase
  const app = initializeApp(firebaseConfig);
