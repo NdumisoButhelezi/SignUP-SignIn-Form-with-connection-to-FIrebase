@@ -3,22 +3,19 @@
  import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
  import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
  
- // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
+ const firebaseConfig = {
     apiKey: "AIzaSyBEwPq1-u1qL4vW499YjkqkGKjH67d0-T0",
     authDomain: "newproto-49e08.firebaseapp.com",
     databaseURL: "https://newproto-49e08-default-rtdb.firebaseio.com",
     projectId: "newproto-49e08",
     storageBucket: "newproto-49e08.appspot.com",
     messagingSenderId: "255983493498",
-    appId: "1:255983493498:web:dfeb79d79ca72b1e8f76c3",
-    measurementId: "G-BT6PYW8ZV6"
+    appId: "1:255983493498:web:7f94fc55a83607268f76c3",
+    measurementId: "G-040K87PQ9T"
   };
 
  // Initialize Firebase
  const app = initializeApp(firebaseConfig);
- const analytics = getAnalytics(app);
 
  function showMessage(message, divId){
     var messageDiv=document.getElementById(divId);
