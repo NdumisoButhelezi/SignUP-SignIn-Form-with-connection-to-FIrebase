@@ -216,10 +216,17 @@
         </div>
         <br/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
-        <style>
-           
-        </style>
-</head>  
+    <script type="module" src="./homepage.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Homepage</h1>
+        <div>
+            <span id="loggedUserFName"></span>
+            <span id="loggedUserLName"></span>
+            <span id="loggedUserEmail"></span>
+        </div>
+        <br/>
         <h1>PDF Upload and Cost Calculator</h1>
         <p>Drag and drop a PDF file or click to upload</p>
         <div id="drop-area">
@@ -231,98 +238,7 @@
         <div id="preview"></div>
         <div id="result"></div>
         <button id="pay-button" style="display: none;">Proceed to Pay</button>
-    
-        <script>
-            const dropArea = document.getElementById('drop-area');
-            const fileInput = document.getElementById('pdf-file');
-            const preview = document.getElementById('preview');
-            const result = document.getElementById('result');
-            const payButton = document.getElementById('pay-button');
-    
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, preventDefaults, false);
-            });
-    
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-    
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropArea.addEventListener(eventName, highlight, false);
-            });
-    
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropArea.addEventListener(eventName, unhighlight, false);
-            });
-    
-            function highlight(e) {
-                dropArea.classList.add('highlight');
-            }
-    
-            function unhighlight(e) {
-                dropArea.classList.remove('highlight');
-            }
-    
-            dropArea.addEventListener('drop', handleDrop, false);
-    
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const file = dt.files[0];
-                handleFile(file);
-            }
-    
-            fileInput.addEventListener('change', function(e) {
-                handleFile(this.files[0]);
-            });
-    
-            function handleFile(file) {
-                const reader = new FileReader();
-    
-                reader.onload = function(e) {
-                    const typedarray = new Uint8Array(e.target.result);
-    
-                    pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
-                        const numPages = pdf.numPages;
-                        const totalCost = numPages * 50;
-                        result.innerHTML = `
-                            Number of pages: ${numPages}<br>
-                            Total cost: R${totalCost.toFixed(2)}
-                        `;
-                        payButton.style.display = 'inline-block';
-    
-                        // Render the first page as preview
-                        pdf.getPage(1).then(function(page) {
-                            const scale = 1.5;
-                            const viewport = page.getViewport({ scale: scale });
-                            const canvas = document.createElement('canvas');
-                            const context = canvas.getContext('2d');
-                            canvas.height = viewport.height;
-                            canvas.width = viewport.width;
-    
-                            const renderContext = {
-                                canvasContext: context,
-                                viewport: viewport
-                            };
-                            page.render(renderContext);
-    
-                            preview.innerHTML = '';
-                            preview.appendChild(canvas);
-                        });
-                    }).catch(function(error) {
-                        console.error(error);
-                        result.innerHTML = 'Error processing PDF. Please try again.';
-                    });
-                };
-    
-                reader.readAsArrayBuffer(file);
-            }
-    
-            payButton.addEventListener('click', function() {
-                alert('Proceeding to payment... (This is a placeholder for the actual payment process)');
-            });
-        </script>
-    </body>
-        
-   
+        <button id="logout">Logout</button>
+    </div>
+</body>
 </html>

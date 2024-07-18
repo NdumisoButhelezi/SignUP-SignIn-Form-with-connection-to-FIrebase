@@ -1,93 +1,137 @@
- // Import the functions you need from the SDKs you need
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
- import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
- import{getFirestore, setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
- 
- const firebaseConfig = {
-    apiKey: "AIzaSyBEwPq1-u1qL4vW499YjkqkGKjH67d0-T0",
-    authDomain: "newproto-49e08.firebaseapp.com",
-    databaseURL: "https://newproto-49e08-default-rtdb.firebaseio.com",
-    projectId: "newproto-49e08",
-    storageBucket: "newproto-49e08.appspot.com",
-    messagingSenderId: "255983493498",
-    appId: "1:255983493498:web:7f94fc55a83607268f76c3",
-    measurementId: "G-040K87PQ9T"
-  };
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
 
- // Initialize Firebase
- const app = initializeApp(firebaseConfig);
+const firebaseConfig = {
+    apiKey: "AIzaSyBoW8PBB34KJATnqXqT9dSOl5Fl5iJ9yVk",
+    authDomain: "newdb-719e2.firebaseapp.com",
+    projectId: "newdb-719e2",
+    storageBucket: "newdb-719e2.appspot.com",
+    messagingSenderId: "151706210941",
+    appId: "1:151706210941:web:6c557d88bd32a79447d714"
+};
 
- function showMessage(message, divId){
-    var messageDiv=document.getElementById(divId);
-    messageDiv.style.display="block";
-    messageDiv.innerHTML=message;
-    messageDiv.style.opacity=1;
-    setTimeout(function(){
-        messageDiv.style.opacity=0;
-    },5000);
- }
- const signUp=document.getElementById('submitSignUp');
- signUp.addEventListener('click', (event)=>{
-    event.preventDefault();
-    const email=document.getElementById('rEmail').value;
-    const password=document.getElementById('rPassword').value;
-    const firstName=document.getElementById('fName').value;
-    const lastName=document.getElementById('lName').value;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
 
-    const auth=getAuth();
-    const db=getFirestore();
+// Create hardcoded admin account
+createHardcodedAdmin();
 
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential)=>{
-        const user=userCredential.user;
-        const userData={
-            email: email,
-            firstName: firstName,
-            lastName:lastName
+function createHardcodedAdmin() {
+    const adminEmail = "admin@example.com";
+    const adminPassword = "adminPassword123!";
+    const adminFirstName = "Admin";
+    const adminLastName = "User";
+
+    createUserWithEmailAndPassword(auth, adminEmail, adminPassword)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        const userData = {
+            email: adminEmail,
+            firstName: adminFirstName,
+            lastName: adminLastName,
+            isAdmin: true
         };
-        showMessage('Account Created Successfully', 'signUpMessage');
-        const docRef=doc(db, "users", user.uid);
-        setDoc(docRef,userData)
-        .then(()=>{
-            window.location.href='index.html';
+        const docRef = doc(db, "users", user.uid);
+        setDoc(docRef, userData)
+        .then(() => {
+            console.log("Admin account created successfully");
         })
-        .catch((error)=>{
-            console.error("error writing document", error);
-
+        .catch((error) => {
+            console.error("Error creating admin account:", error);
         });
     })
-    .catch((error)=>{
-        const errorCode=error.code;
-        if(errorCode=='auth/email-already-in-use'){
-            showMessage('Email Address Already Exists !!!', 'signUpMessage');
+    .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+            console.log("Admin account already exists");
+        } else {
+            console.error("Error creating admin account:", error);
         }
-        else{
-            showMessage('unable to create User', 'signUpMessage');
-        }
-    })
- });
+    });
+}
 
- const signIn=document.getElementById('submitSignIn');
- signIn.addEventListener('click', (event)=>{
+function showMessage(message, divId) {
+    var messageDiv = document.getElementById(divId);
+    messageDiv.style.display = "block";
+    messageDiv.innerHTML = message;
+    messageDiv.style.opacity = 1;
+    setTimeout(function() {
+        messageDiv.style.opacity = 0;
+    }, 5000);
+}
+
+const signUp = document.getElementById('submitSignUp');
+signUp.addEventListener('click', (event) => {
     event.preventDefault();
-    const email=document.getElementById('email').value;
-    const password=document.getElementById('password').value;
-    const auth=getAuth();
+    const email = document.getElementById('rEmail').value;
+    const password = document.getElementById('rPassword').value;
+    const firstName = document.getElementById('fName').value;
+    const lastName = document.getElementById('lName').value;
 
-    signInWithEmailAndPassword(auth, email,password)
-    .then((userCredential)=>{
-        showMessage('login is successful', 'signInMessage');
-        const user=userCredential.user;
-        localStorage.setItem('loggedInUserId', user.uid);
-        window.location.href='homepage.html';
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        const userData = {
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            isAdmin: false // Regular users are not admins
+        };
+        showMessage('Account Created Successfully', 'signUpMessage');
+        const docRef = doc(db, "users", user.uid);
+        setDoc(docRef, userData)
+        .then(() => {
+            window.location.href = 'index.html';
+        })
+        .catch((error) => {
+            console.error("Error writing document", error);
+        });
     })
-    .catch((error)=>{
-        const errorCode=error.code;
-        if(errorCode==='auth/invalid-credential'){
-            showMessage('Incorrect Email or Password', 'signInMessage');
+    .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode == 'auth/email-already-in-use') {
+            showMessage('Email Address Already Exists !!!', 'signUpMessage');
+        } else {
+            showMessage('Unable to create User', 'signUpMessage');
         }
-        else{
+    });
+});
+
+const signIn = document.getElementById('submitSignIn');
+signIn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        const docRef = doc(db, "users", user.uid);
+        getDoc(docRef).then((docSnap) => {
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                localStorage.setItem('loggedInUserId', user.uid);
+                localStorage.setItem('isAdmin', userData.isAdmin);
+                showMessage('Login successful', 'signInMessage');
+                if (userData.isAdmin) {
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    window.location.href = 'homepage.html';
+                }
+            }
+        });
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode === 'auth/invalid-credential') {
+            showMessage('Incorrect Email or Password', 'signInMessage');
+        } else {
             showMessage('Account does not Exist', 'signInMessage');
         }
-    })
- })
+    });
+});
+
+
