@@ -196,7 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
             totalCost: totalCost,
             uploadTime: new Date(),
             downloadURL: downloadURL,
-            userId: currentUser.uid
+            userId: currentUser.uid,
+            uploaderName: currentUserName
         };
 
         addDoc(collection(db, "pdfUploads"), pdfData)

@@ -4,15 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="admin_dashboard.css">
     <script type="module" src="admin-dashboard.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Admin Dashboard</h1>
-        <div id="userList"></div>
-        <button id="logoutButton">Logout</button>
+        <h2>PDF Uploads</h2>
+        <div class="upload-section">
+            <h2>Upload PDF</h2>
+            <input type="file" id="pdfFileInput" accept="application/pdf">
+            <button id="uploadButton">Upload PDF</button>
+        </div>
+        <table class="uploads-table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Pages</th>
+                    <th>Cost</th>
+                    <th id="uploadedByHeader">Uploaded by</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="uploadsList">
+                <!-- Data will be populated here by JavaScript -->
+            </tbody>
+        </table>
+        <button id="logoutButton" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
 </html>
-

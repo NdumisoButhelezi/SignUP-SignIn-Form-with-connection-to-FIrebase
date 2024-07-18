@@ -17,17 +17,22 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
-// Create hardcoded admin account
-createHardcodedAdmin();
-
-function createHardcodedAdmin() {
+async function createHardcodedAdmin() {
     const adminEmail = "admin@example.com";
     const adminPassword = "adminPassword123!";
     const adminFirstName = "Admin";
     const adminLastName = "User";
 
+    // Check if admin already exists
+    const querySnapshot = await getDocs(query(collection(db, "users"), where("email", "==", adminEmail)));
+    if (!querySnapshot.empty) {
+        console.log("Admin account already exists with this email");
+        return;
+    }
+
     createUserWithEmailAndPassword(auth, adminEmail, adminPassword)
     .then((userCredential) => {
+        // Admin account creation success
         const user = userCredential.user;
         const userData = {
             email: adminEmail,
@@ -41,15 +46,11 @@ function createHardcodedAdmin() {
             console.log("Admin account created successfully");
         })
         .catch((error) => {
-            console.error("Error creating admin account:", error);
+            console.error("Error setting admin document:", error);
         });
     })
     .catch((error) => {
-        if (error.code === 'auth/email-already-in-use') {
-            console.log("Admin account already exists");
-        } else {
-            console.error("Error creating admin account:", error);
-        }
+        console.error("Error creating admin account:", error);
     });
 }
 
